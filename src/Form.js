@@ -1,7 +1,15 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+const initialState = { isim: "", rol: " ", email: "" };
 
 export default function Form(props) {
-  const [formData, setFormData] = useState(props);
+  const [formData, setFormData] = useState(initialState);
+
+  useEffect(() => {
+    if (props.editingMember) {
+      setFormData(props.editingMember);
+    }
+  }, [props.editingMember]);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -12,7 +20,8 @@ export default function Form(props) {
     console.log(formData);
     alert("Form başarıyla gönderildi!");
     // formu sıfırlamak - başlangıç haline getirmek
-    setFormData(props);
+    setFormData(initialState);
+    props.addMember(formData);
   };
   return (
     <>
@@ -21,11 +30,11 @@ export default function Form(props) {
         <br />
 
         <label>
-          <span>Adınız</span>
+          <span>İsim</span>
           <input
             name="isim"
             type="text"
-            //value={formData.isim}
+            value={formData.isim}
             onChange={handleChange}
           ></input>
         </label>
@@ -37,7 +46,7 @@ export default function Form(props) {
           <input
             name="rol"
             type="text"
-            //value={formData.rol}
+            value={formData.rol}
             onChange={handleChange}
           ></input>
         </label>
@@ -50,7 +59,7 @@ export default function Form(props) {
           <input
             name="email"
             type="email"
-            //value={formData.email}
+            value={formData.email}
             onChange={handleChange}
           ></input>
         </label>
