@@ -2,6 +2,7 @@ import { useState } from "react";
 
 export default function Form(props) {
   const [formData, setFormData] = useState(props);
+
   function handleChange(e) {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
